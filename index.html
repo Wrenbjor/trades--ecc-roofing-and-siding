@@ -370,18 +370,17 @@ footer a:hover{text-decoration:underline}
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 (function(){
-  var city='Hammonton',state='NJ';
-  if(!city)return;
-  var q=encodeURIComponent(city+(state?', '+state:'')+', USA');
+  var geo='187 S RT-73, Hammonton, NJ';
+  if(!geo)return;
+  var q=encodeURIComponent(geo+', USA');
   fetch('https://nominatim.openstreetmap.org/search?q='+q+'&format=json&limit=1')
     .then(function(r){return r.json();})
     .then(function(d){
       if(!d||!d.length)return;
       var lat=parseFloat(d[0].lat),lng=parseFloat(d[0].lon);
       var map=L.map('map',{scrollWheelZoom:false}).setView([lat,lng],13);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
-        attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains:'abcd',
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+        attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom:19
       }).addTo(map);
       L.marker([lat,lng]).addTo(map).bindPopup('ECC Roofing &amp; Siding').openPopup();
